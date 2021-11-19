@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import Exercise1 from "./exercises/exercise1/RootComponent";
 import Exercise2 from "./exercises/exercise2/RootComponent";
@@ -12,8 +12,6 @@ import Exercise6 from "./exercises/exercise6/RootComponent";
 import Exercise7 from "./exercises/exercise7/RootComponent";
 import Exercise8 from "./exercises/exercise8/RootComponent";
 import Exercise9 from "./exercises/exercise9/RootComponent";
-import Exercise10 from "./exercises/exercise10/RootComponent";
-import Exercise11 from "./exercises/exercise11/RootComponent";
 
 function App() {
 
@@ -21,26 +19,20 @@ function App() {
 		['exercise1', 'button with onClick', Exercise1],
 		['exercise2', 'input and save state on button click', Exercise2],
 		['exercise3', 'Calculate change based on available cuts', Exercise3],
-		['exercise4', 'Add a return change button to propagate result up from ReturnChange to Shop', Exercise4],
-		['exercise5', 'Re-rendering optimizations', Exercise5],
-		['exercise6', 'Add a remembered state of returned cuts', Exercise6],
-		['exercise7', 'Css styling (bootstrap classes are available)', Exercise7],
-		['exercise9', 'useEffect that skips mount', Exercise8],
-		['exercise9', 'useEffect that triggers one function on mount and another for all events after the first mount', Exercise9],
-		['exercise10', 'Redux', Exercise10],
-		['exercise11', 'react-router-dom Switch/Routes', Exercise11],
+		['exercise4', 'Add a remembered state of returned cuts', Exercise4],
+		['exercise5', 'Css styling (bootstrap classes are available)', Exercise5],
+		['exercise6', '"useSkipMountEffect" that skips mount', Exercise6],
+		['exercise7', '"useWithFirstMountEffect" that triggers one function on mount and another for all subsequent re-renders', Exercise7],
+		['exercise8', 'Redux', Exercise8],
+		['exercise9', 'react-router-dom Switch/Routes', Exercise9],
 	]);
 
 	const [selectedExercise, setSelectedExercise] = useState(exercices[0]);
-	const [{ reRenderExercise }, setReRender] = useState({
-		reRenderExercise: {},
-	});
+	const [reRender, setReRender] = useState(0);
 
 	const onChange = useCallback((event) => {
 		setSelectedExercise([...exercices.find(([name]) => name === event.target.value)]);
-		setReRender({
-			reRenderExercise: {},
-		});
+		setReRender(reRender => reRender + 1);
 	}, [exercices]);
 
 	const SelectedExercise = selectedExercise[2];
@@ -83,12 +75,9 @@ function App() {
 			<div className="d-flex" id="app-exercises-display">
 				<div className="border-warning position-relative">
 					{renderReRenderButton(() => {
-						setReRender(reRender => ({
-							...reRender,
-							reRenderExercise: {},
-						}));
+						setReRender(reRender => reRender + 1);
 					})}
-					{useMemo(() => <SelectedExercise key={reRenderExercise.length}/>, [reRenderExercise])}
+					<SelectedExercise key={reRender}/>
 				</div>
 			</div>
 			<div

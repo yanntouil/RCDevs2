@@ -24,7 +24,10 @@ const RootComponent = (props) => {
 	return(
 		<div>
 			<h3>With the usage of useRef, create a custom hook using useEffect that skips first mount</h3>
-			<div>State value should remain at 0 on mount (because the useEffect should not be triggered on mount)</div>
+			<div>
+				State value should remain at 0 on mount (because the useEffect should not be triggered on mount)<br/>
+				Or more precisely, the useEffect will run, but the function given to it should not be run on first mount..
+			</div>
 			<div>{state}</div>
 			<button
 				onClick={() => {setState(state => state + 1)}}

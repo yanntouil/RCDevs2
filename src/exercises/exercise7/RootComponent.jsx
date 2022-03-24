@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+import useWithFirstMountEffect from './use-with-first-mount-effect';
 
 const RootComponent = (props) => {
 
-	const [/*triggerUseEffect*/, setTriggerUseEffect] = useState(0);
-	const [state/*, setState*/] = useState({
+	const [triggerUseEffect, setTriggerUseEffect] = useState(0);
+	const [state, setState] = useState({
 		text: 'none',
 		value: 0,
 	});
 
-	/* It should be used like that
+	/* It should be used like that	*/
+
 	useWithFirstMountEffect(
 
 		// this function is the one executed on initial render
@@ -30,8 +32,7 @@ const RootComponent = (props) => {
 		// this function is the one executed on on all renders after
 
 		[triggerUseEffect],		// dependencies, like for a useEffect
-	);
-	*/
+	)
 
 	return(
 		<div>
@@ -43,8 +44,8 @@ const RootComponent = (props) => {
 				Trigger useWithFirstMountEffect
 			</button>
 		</div>
-	);
+	)
 
-};
+}
 
-export default RootComponent;
+export default RootComponent

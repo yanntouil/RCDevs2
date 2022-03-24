@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import useSkipMountEffect from './use-skip-mount-effect';
 
 const RootComponent = (props) => {
 
 	const [state, setState] = useState(0);
 
-	useEffect(() => {
+	useSkipMountEffect(() => {
 		// we want this useEffect to skip the mount (this useEffect will loop indefinetely...)
 		// we stop it at 50 to prevent a react warning...
 		if (state < 50) setState(state => state + 1);
 	}, [state]);
 
-	/*
 
+	/*
 	Basically it should be used like:
 	useSkipMountEffect(() => {
 		// we want this useEffect to skip the mount (this useEffect will loop indefinetely...)
